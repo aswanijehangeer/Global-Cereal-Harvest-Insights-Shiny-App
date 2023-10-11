@@ -10,8 +10,8 @@ This Shiny app visualizes data on global cereal production, offering insights in
 
 ## App Screenshots
 
-[Image 01](screenshots/image_01.png)
-[Image 02](screenshots/image_02.png)
+![Image 01](screenshots/image_01.png)
+![Image 02](screenshots/image_02.png)
 
 ## [Check live app here](https://aswanijahangeer.shinyapps.io/Global-Cereal-Production/)
 
