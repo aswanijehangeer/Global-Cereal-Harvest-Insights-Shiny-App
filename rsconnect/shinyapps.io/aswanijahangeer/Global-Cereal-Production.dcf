@@ -1,0 +1,14 @@
+name: Global-Cereal-Production
+title: Global-Cereal-Production
+username:
+account: aswanijahangeer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10156583
+bundleId: 7788897
+url: https://aswanijahangeer.shinyapps.io/Global-Cereal-Production/
+when: 1697004694.96904
+lastSyncTime: 1697004694.96912
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Global Cereal Production.webm|README.md
