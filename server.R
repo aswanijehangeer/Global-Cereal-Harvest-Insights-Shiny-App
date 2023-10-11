@@ -10,12 +10,17 @@ server <- function(input, output, session) {
         entity == input$country,
         year >= input$year[1] & year <= input$year[2]
       )
+    
     return(filtered_data)
   })
   
   output$plot <- renderEcharts4r({
     # Reactive data
     selected <- selected_data()
+    
+    if (any(is.na(selected))) {
+      shinyalert("Data Not Available", "Data is not available or contains missing values for the selected country and year.")
+    }
     
     # Checking if data for the initial year is available
     if (sum(selected$year == input$year[1]) == 0) {
