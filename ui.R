@@ -5,6 +5,8 @@ ui <- page_sidebar(
     br(),
     h5("The values shown in the boxes are static and are calculated based on data for all countries available in the dataset."),
     br(),
+    h5("Please select a country to see the chart!"),
+    br(),
     h5("NOTE: In future updates, interactive features will be added for the value boxes."),
     title = "Welcome to Global Cereal Production App",
     size = "l",
@@ -17,8 +19,11 @@ ui <- page_sidebar(
   # Side bar
   sidebar = sidebar(
     # Inputs Controls
-    selectInput("country", "Choose Country",unique(cereal_data$entity),
-                selected = "Africa"),
+    pickerInput("country", "Choose Country",unique(cereal_data$entity),
+                options = pickerOptions(
+                  actionsBox = TRUE,
+                  title = "Please select a country",
+                  liveSearch = TRUE)),
     sliderInput("year", "Choose Years",
                 min = min(cereal_data$year),
                 max = max(cereal_data$year),
