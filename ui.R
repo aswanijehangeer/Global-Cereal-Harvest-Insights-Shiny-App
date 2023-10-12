@@ -48,7 +48,7 @@ ui <- page_sidebar(
   
   # Main panel plot card
   card(
-    card_header("% Change of Cereal Production in the Countries since 1961"),
+    card_header(textOutput("plot_title")),
     echarts4rOutput("plot")
   )
 )
