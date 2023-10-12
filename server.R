@@ -18,25 +18,36 @@ server <- function(input, output, session) {
     # Reactive data
     selected <- selected_data()
     
-    if (any(is.na(selected))) {
+    if (nrow(selected) == 0) {
       shinyalert("Data Not Available", "Data is not available or contains missing values for the selected country and year.")
+      return()
+    }
+    
+    # Checking for missing values
+    if (any(is.na(selected$area_harvested_hectares)) || 
+        any(is.na(selected$production_tonnes)) || 
+        any(is.na(selected$yield_tonnes_per_hectare))) {
+      shinyalert("Data Not Available", "Data is not available or contains missing values for the selected country and year.")
+      return()
     }
     
     # Checking if data for the initial year is available
     if (sum(selected$year == input$year[1]) == 0) {
-      
       # if data for the initial year is not available for the selected country
       # then use the next available year's data for calculations
       initial_year_data <- selected %>% filter(year == min(selected$year))
     } else {
       initial_year_data <- selected %>% filter(year == input$year[1])
     }
+    
     # Calculating %change in Area Harvested
     change_area_harvested <- selected %>%
       mutate(Area_Harvested = round(((area_harvested_hectares - initial_year_data$area_harvested_hectares) / initial_year_data$area_harvested_hectares) * 100, 1))
+    
     # Calculating %change in Production
     change_production <- selected %>%
       mutate(Production = round(((production_tonnes - initial_year_data$production_tonnes) / initial_year_data$production_tonnes) * 100, 1))
+    
     # Calculating %change in Yield
     change_yield <- selected %>%
       mutate(Yield = round(((yield_tonnes_per_hectare - initial_year_data$yield_tonnes_per_hectare) / initial_year_data$yield_tonnes_per_hectare) * 100, 1))
@@ -45,19 +56,29 @@ server <- function(input, output, session) {
     change_area_harvested$year <- as.character(change_area_harvested$year)
     change_production$year <- as.character(change_production$year)
     change_yield$year <- as.character(change_yield$year)
-    
+     
     # Combined line plot for % change in (Yield, Production, and Area-Harvested)
-    change_area_harvested |>  
-      e_charts(year) |> 
-      e_line(Area_Harvested) |> 
-      e_data(change_production) |> 
-      e_line(serie = Production) |> 
-      e_data(change_yield) |> 
-      e_line(serie = Yield) |> 
-      e_axis_labels(y = "[Change in %]") |> 
-      e_tooltip(trigger = "item") |> 
-      e_legend(bottom = 0) |> 
+    change_area_harvested %>%
+      e_charts(year) %>%
+      e_line(Area_Harvested) %>%
+      e_data(change_production) %>%
+      e_line(serie = Production) %>%
+      e_data(change_yield) %>%
+      e_line(serie = Yield) %>%
+      e_axis_labels(y = "[Change in %]") %>%
+      e_tooltip(trigger = "item") %>%
+      e_legend(bottom = 0) %>%
       e_toolbox_feature(feature = "dataView")
   })
+  output$plot_title <- renderText({
+    # Getting the selected country and year range
+    selected_country <- input$country
+    selected_year_range <- paste(input$year[1], "-", input$year[2])
+    
+    # Construct the dynamic title
+    title <- paste("% Change of Cereal Production in ", selected_country, " since ", selected_year_range)
+    return(title)
+  })
+  
 }
 
