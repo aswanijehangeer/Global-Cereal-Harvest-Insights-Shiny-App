@@ -19,7 +19,12 @@ server <- function(input, output, session) {
     selected <- selected_data()
     
     if (nrow(selected) == 0) {
-      shinyalert("Data Not Available", "Data is not available or contains missing values for the selected country and year.")
+      shinyalert(title = "Data Not Available", 
+                 text = "Data is not available or contains missing values for the selected country and year.",
+                 type = "error", 
+                 animation = TRUE,
+                 confirmButtonCol = "#78C2AD",
+                 confirmButtonText = "BACK",)
       return()
     }
     
@@ -27,7 +32,13 @@ server <- function(input, output, session) {
     if (any(is.na(selected$area_harvested_hectares)) || 
         any(is.na(selected$production_tonnes)) || 
         any(is.na(selected$yield_tonnes_per_hectare))) {
-      shinyalert("Data Not Available", "Data is not available or contains missing values for the selected country and year.")
+      shinyalert(
+        title = "Data Not Available", 
+        text = "Data is not available or contains missing values for the selected country and year.",
+        type = "error",
+        animation = TRUE,
+        confirmButtonCol = "#78C2AD",
+        confirmButtonText = "BACK",)
       return()
     }
     
