@@ -1,17 +1,4 @@
 ui <- page_sidebar(
-  # Welcome pop-up modal
-  modalDialog(
-    h5("This app provides an overview of global cereal production from 1961 to 2021."),
-    br(),
-    h5("The values shown in the boxes are static and are calculated based on data for all countries available in the dataset."),
-    br(),
-    h5("Please select a country to see the chart!"),
-    br(),
-    h5("NOTE: In future updates, interactive features will be added for the value boxes."),
-    title = "Welcome to Global Cereal Production App",
-    size = "l",
-    easyClose = FALSE,
-  ),
   # Title of the App
   title = "Global Cereal Production [1961 - 2021]",
   theme = bs_theme(bootswatch = "minty"),
@@ -19,7 +6,8 @@ ui <- page_sidebar(
   # Side bar
   sidebar = sidebar(
     # Inputs Controls
-    pickerInput("country", "Choose Country",unique(cereal_data$entity),
+    pickerInput("country", "Choose Country",unique(cereal_data$entity), 
+                selected = "Afghanistan",
                 options = pickerOptions(
                   actionsBox = TRUE,
                   title = "Please select a country",
@@ -33,17 +21,14 @@ ui <- page_sidebar(
   layout_columns(
     fill = FALSE,
     value_box(
-      # style = 'background-color: #5C7BD9!important;',
-      title = "Total Area Harvested across all Countries (Hectares)",
-      value = paste0(round(sum(cereal_data$area_harvested_hectares, na.rm = TRUE) / 1e9, 1), " Bn")),
+      title = textOutput("left_box_title"),
+      value = textOutput("total_area_harvested")),
     value_box(
-      # style = 'background-color: #FFDC60!important;',
-      title = "Total Cereal Production across all Countries (Tonnes)",
-      value = paste0(round(sum(cereal_data$production_tonnes, na.rm = TRUE) / 1e9, 1), " Bn")),
+      title = textOutput("middle_box_title"),
+      value = textOutput("total_production")),
     value_box(
-      # style = 'background-color: #A0E081!important;',
-      title = "Total Cereal Yeild across all Countries (Tonnes)",
-      value = round(sum(cereal_data$yield_tonnes_per_hectare, na.rm = TRUE),1))
+      title = textOutput("right_box_title"),
+      value = textOutput("total_yeild"))
   ),
   
   # Main panel plot card
