@@ -67,7 +67,7 @@ server <- function(input, output, session) {
     change_area_harvested$year <- as.character(change_area_harvested$year)
     change_production$year <- as.character(change_production$year)
     change_yield$year <- as.character(change_yield$year)
-     
+    
     # Combined line plot for % change in (Yield, Production, and Area-Harvested)
     change_area_harvested %>%
       e_charts(year) %>%
@@ -81,13 +81,52 @@ server <- function(input, output, session) {
       e_legend(bottom = 0) %>%
       e_toolbox_feature(feature = "dataView")
   })
+  
   output$plot_title <- renderText({
-    # Getting the selected country and year range
+    # Selected country and year range
     selected_country <- input$country
     selected_year_range <- paste(input$year[1], "-", input$year[2])
     
-    # Construct the dynamic title
+    # Dynamic title
     title <- paste("% Change of Cereal Production in ", selected_country, " since ", selected_year_range)
+    return(title)
+  })
+  
+  output$total_area_harvested <- renderText({
+    # Reactive data
+    selected <- selected_data()
+    paste(round(sum(selected$area_harvested_hectares, na.rm = TRUE)/1000000, 2), "Millions")
+  })
+  output$total_production <- renderText({
+    # Reactive data
+    selected <- selected_data()
+    paste(round(sum(selected$production_tonnes, na.rm = TRUE)/1000000, 2), "Millions")
+  })
+  output$total_yeild <- renderText({
+    # Reactive data
+    selected <- selected_data()
+    paste(round(sum(selected$yield_tonnes_per_hectare, na.rm = TRUE), 2), "Millions")
+  })
+  
+  output$left_box_title <- renderText({
+    # Selected country and year range
+    selected_country <- input$country
+    # Dynamic title
+    title <- paste("Total Area Harvested in ", selected_country, "(Hectares)")
+    return(title)
+  })
+  output$middle_box_title <- renderText({
+    # Selected country and year range
+    selected_country <- input$country
+    # Dynamic title
+    title <- paste("Total Cereal Production in ",  selected_country, "(Tonnes)")
+    return(title)
+  })
+  output$right_box_title <- renderText({
+    # Selected country and year range
+    selected_country <- input$country
+    # Dynamic title
+    title <- paste("Total Cereal Yeild in ", selected_country, "(Tonnes)")
     return(title)
   })
   
