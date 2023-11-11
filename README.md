@@ -1,6 +1,11 @@
 # Global Cereal Production RShiny App
 
+<img src="Screenshots/global-cereal-production.png" width="170" height="200" align="right"/>
+
 This Shiny app visualizes data on global cereal production, offering insights into the changes in yields and production trends across various countries.
+
+<br>
+<br>
 
 ## Features
 
