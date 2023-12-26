@@ -1,4 +1,4 @@
-# Global Cereal Production RShiny App
+# Global Cereal Harvest Insights: Shiny App
 
 <img src="Screenshots/global-cereal-production.png" width="170" height="200" align="right"/>
 
@@ -17,9 +17,9 @@ This Shiny app visualizes data on global cereal production, offering insights in
 
 ![Image 02](Screenshots/Image_02.png)
 
-## [Check live app here](https://aswanijahangeer.shinyapps.io/Global-Cereal-Production/)
+### [Check live app here](https://aswanijahangeer.shinyapps.io/Global-Cereal-Production/)
 
-## [Youtube Link](https://youtu.be/CPaO17ursPo)
+### [Youtube Link](https://youtu.be/CPaO17ursPo)
 
 ## Feedback
 
